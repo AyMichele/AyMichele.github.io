@@ -1,0 +1,43 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+#quote-box{
+  background: silver;
+  border: 1px solid silver;
+
+}
+
+.buttonStyleLink {
+  font-size: 28px;
+  position: relative;
+  margin: 10px 10px 0px 5px;
+}
+
+
+ .buttonStyle  {
+  font-size: 14px;
+  position: relative;
+  margin: 18px 15px 0px 15px;
+}
+
+#quote-box{
+  background-color: white;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#text{
+  padding: 15px;
+}
