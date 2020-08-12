@@ -1,55 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
 import { render } from '@testing-library/react';
-<<<<<<< HEAD
-=======
 import {LinkComponent} from './QuoteMachineComponents';
 import {ChangeQuoteComponent} from './QuoteMachineComponents';
 import {Editor} from './MarkdownPreviewer';
 import {Preview} from './MarkdownPreviewer';
 
 
->>>>>>> fc90b74f40eab67ec4ed15b4f39eb19d8cd5e999
 
 
 const appStyle = {
   height: "100vh",
   width: "100%",
-<<<<<<< HEAD
-  overflow: "hidden"
-}
-
-
-class ChangeQuoteComponent extends React.Component{
-  constructor(props){
-    super(props)
-  }
-  
-  render(){
-    return(
-      <div>
-        <button onClick={this.props.changeQuote} id="new-quote" className="btn btn-outline-primary float-right buttonStyle ">New Quote</button>
-      </div>
-    );
-  }
-}
-
-
-class LinkComponent extends React.Component{
-  constructor(props){
-    super(props)
-  }
-  
-  render(){
-    return(
-      <div>
-        <a id="tweet-quote" href="twitter.com/intent/tweet" target="_blank" className="float-left btn btn-default fa fa-twitter buttonStyleLink"></a>
-      </div>
-    );
-  }
-}
-
-=======
   overflowX: "hidden"
 }
 
@@ -65,7 +27,6 @@ const heightStyle = {
 
 
 
->>>>>>> fc90b74f40eab67ec4ed15b4f39eb19d8cd5e999
 class  App extends React.Component {
   constructor(props){
     super(props);
@@ -94,11 +55,7 @@ class  App extends React.Component {
   render(){
     return (
       <div className="App" style={appStyle}>
-<<<<<<< HEAD
-        <div className="row h-100 justify-content-center align-items-center">
-=======
         <div style={quoteMachineStyle}className="row h-100 justify-content-center align-items-center">
->>>>>>> fc90b74f40eab67ec4ed15b4f39eb19d8cd5e999
             <wrapper id="quote-box" className="w-25 d-inline">
               <h5 id="text" className="text-center">{Object.getOwnPropertyNames(this.state.quotes[this.state.quoteNumber])}</h5>
               <p id="author" >-{this.state.quotes[this.state.quoteNumber][Object.getOwnPropertyNames(this.state.quotes[this.state.quoteNumber])]}</p>
@@ -106,8 +63,6 @@ class  App extends React.Component {
               <ChangeQuoteComponent changeQuote={this.changeQuote}/>
             </wrapper>
         </div>
-<<<<<<< HEAD
-=======
         <div style={appStyle} >
           <div style={ heightStyle} className="w-25 mx-auto mt-1">
             <h6 className="float-left mt-1">Editor</h6>
@@ -118,7 +73,6 @@ class  App extends React.Component {
             <Preview />  
           </div>
         </div>
->>>>>>> fc90b74f40eab67ec4ed15b4f39eb19d8cd5e999
       </div>
     );
   }
