@@ -11,6 +11,15 @@ import {PreGoals} from './GoalTimer';
 import {MoneyForm} from './GoalTimer';
 import {CheckForm} from './GoalTimer';
 import marked from 'marked';
+import {moneyStore} from './store';
+import {addMoney} from './store';
+
+
+
+console.log(moneyStore.getState)
+
+
+
 
 const textStyle = {
   padding: "15px",

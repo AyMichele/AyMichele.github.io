@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import { render } from '@testing-library/react';
-
+import {moneyStore} from './store';
+import {addMoney} from './store';
 
 
 const daysLeftHeader = {
