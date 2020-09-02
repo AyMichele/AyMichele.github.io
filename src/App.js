@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import { render } from '@testing-library/react';
 import {LinkComponent} from './QuoteMachineComponents';
 import {ChangeQuoteComponent} from './QuoteMachineComponents';
 import {Editor} from './MarkdownPreviewer';
@@ -8,17 +7,17 @@ import {Preview} from './MarkdownPreviewer';
 import {DaysLeft} from './GoalTimer';
 import {MoneyCalc} from './GoalTimer';
 import {PreGoals} from './GoalTimer';
-import {MoneyForm} from './GoalTimer';
+import MoneyForm from './GoalTimer';
 import {CheckForm} from './GoalTimer';
 import marked from 'marked';
-import {moneyStore} from './store';
-import {addMoney} from './store';
+import moneyStore  from './store/store';
+import {Provider} from 'react-redux'
+import  {loadState, saveState} from './localStorage'
 
-
-
-console.log(moneyStore.getState)
-
-
+const persistedState = loadState();
+moneyStore.subscribe(() => {
+  saveState(moneyStore.getState())
+})
 
 
 const textStyle = {
@@ -61,6 +60,12 @@ const goelTimerStyle = {
   border: "1px solid #ff4d4d",
   height: "200vh",
   overflowX: "hidden",
+}
+
+const moneyHeader = {
+  color: "white",
+  fontSize: "30px",
+  marginTop: "20px",
 }
 
 
@@ -141,10 +146,6 @@ class  App extends React.Component {
         {"You only live once, but if you do it right, once is enough": "Mae West"}
       ],
       input: placeholder,
-      daysLeft: 249,
-      moneyNeeded: 5000,
-      moneyIGot: 0,
-      moneyInput: 0
     }
     this.changeQuote = this.changeQuote.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -163,10 +164,13 @@ class  App extends React.Component {
     })
   }
   
-  gotThatMoney(){
-    this.setState({
-      moneyIGot: this.state.moneyInput
-    })
+  gotThatMoney() {
+    this.setState((state) => {
+      return {
+        moneyInput: 0,
+        moneyIGot: this.state.moneyInput
+      };
+    });
   }
 
 
@@ -178,60 +182,59 @@ class  App extends React.Component {
  
   render(){
     return (
-      <div className="App text-center">
-        {/* ###################################################################################
-        ------------------------------------ GOAL TIMER APP -----------------------------------
-        #######################################################################################*/}
-        <div style={goelTimerStyle} className="">
-          <DaysLeft daysLeft={this.state.daysLeft}/>
-          <div className="row justify-content-center align-items-center">
-            <MoneyCalc moneyNeeded={this.state.moneyNeeded} moneyIGot = {this.state.moneyIGot}/>
-          </div>
-          <div className="row justify-content-center align-items-center">
-            <MoneyForm handleMoneyChange = {this.handleMoneyChange}
-             moneyInput={this.state.moneyInput} gotThatMoney = {this.gotThatMoney} />
-          </div>
-          <div className="row justify-content-center align-items-center mt-1">
-            <PreGoals/>
-          </div>
-          <div>
-            <CheckForm />
-          </div>
-        </div>
-        {/*......................................................................................*/}
-        {/* ###################################################################################
-        ------------------------------------QUOTE MACHINE APP -----------------------------------
-        #######################################################################################*/}
-        <div style={quoteAppStyle} >
-          <div style={quoteMachineStyle}className="row h-100 justify-content-center align-items-center">
-              <wrapper style = {quoteBoxStyle} id="quote-box" className="w-25 d-inline">
-                <h5 style = {textStyle} id="text" className="text-center">"{Object.getOwnPropertyNames(this.state.quotes[this.state.quoteNumber])}"</h5>
-                <p id="author" >-{this.state.quotes[this.state.quoteNumber][Object.getOwnPropertyNames(this.state.quotes[this.state.quoteNumber])]}</p>
-                <LinkComponent />
-                <ChangeQuoteComponent changeQuote={this.changeQuote}/>
-              </wrapper>
-          </div>
-        </div>
-         {/*......................................................................................*/}
-        {/* ###################################################################################
-        -------------------------------- MARKDOWN PREVIEWER APP -------------------------------
-        #######################################################################################*/}  
-        <div style={markdownAppStyle} >
-          <div style={markDownPreviewerStyle} className=" flex-column">
-            <div style={ heightStyle} className="w-25 mx-auto ">
-              <h6 className="float-left mt-2 ml-3">Editor</h6>
-              <Editor input={this.state.input} handleChange={this.handleChange} />  
+      <Provider store = {moneyStore}>
+        <div className="App text-center">
+          {/* ###################################################################################
+          ------------------------------------ GOAL TIMER APP -----------------------------------
+          #######################################################################################*/}
+          <div style={goelTimerStyle} className="">
+            <div className="row justify-content-center align-items-center">
+              <MoneyForm/>
             </div>
-            <div style={heightStyle} className="w-50 mx-auto ">
-              <h6 className="float-left mt-2 ml-3">Preview</h6>
-              <Preview input={this.state.input}/>  
+            <div className="row justify-content-center align-items-center mt-1">
+              <PreGoals/>
             </div>
-          </div>  
+            <div>
+              <CheckForm />
+            </div>
+          </div>
+          {/*......................................................................................*/}
+          {/* ###################################################################################
+          ------------------------------------QUOTE MACHINE APP -----------------------------------
+          #######################################################################################*/}
+          <div style={quoteAppStyle} >
+            <div style={quoteMachineStyle}className="row h-100 justify-content-center align-items-center">
+                <wrapper style = {quoteBoxStyle} id="quote-box" className="w-25 d-inline">
+                  <h5 style = {textStyle} id="text" className="text-center">"{Object.getOwnPropertyNames(this.state.quotes[this.state.quoteNumber])}"</h5>
+                  <p id="author" >-{this.state.quotes[this.state.quoteNumber][Object.getOwnPropertyNames(this.state.quotes[this.state.quoteNumber])]}</p>
+                  <LinkComponent />
+                  <ChangeQuoteComponent changeQuote={this.changeQuote}/>
+                </wrapper>
+            </div>
+          </div>
+          {/*......................................................................................*/}
+          {/* ###################################################################################
+          -------------------------------- MARKDOWN PREVIEWER APP -------------------------------
+          #######################################################################################*/}  
+          <div style={markdownAppStyle} >
+            <div style={markDownPreviewerStyle} className=" flex-column">
+              <div style={ heightStyle} className="w-25 mx-auto ">
+                <h6 className="float-left mt-2 ml-3">Editor</h6>
+                <Editor input={this.state.input} handleChange={this.handleChange} />  
+              </div>
+              <div style={heightStyle} className="w-50 mx-auto ">
+                <h6 className="float-left mt-2 ml-3">Preview</h6>
+                <Preview input={this.state.input}/>  
+              </div>
+            </div>  
+          </div>
+          {/*......................................................................................*/}
         </div>
-        {/*......................................................................................*/}
-      </div>
+      </Provider>  
     );
   }
 }
 
-export default App;
+
+
+export default App

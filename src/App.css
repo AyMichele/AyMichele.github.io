@@ -22,3 +22,9 @@
 #quote-box{
   transition: .6s !important;
 }
+.hoverClass:hover{
+  background-color: white;
+  color: "#ff4d4d";
+  border-color:"#ff4d4d" !important ;
+  cursor: pointer;
+}
